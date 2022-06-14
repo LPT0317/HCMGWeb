@@ -46,6 +46,23 @@
             return $stmt;
         }
 
+        public function getInfo()
+        {
+            $query = 'SELECT 
+                User_name,
+                User_password
+                FROM
+                ' . $this->table .
+                ' WHERE User_id='
+                . $this->id;
+
+            $stmt = $this->conn->prepare($query);
+
+            $stmt->execute();
+
+            return $stmt;
+        }
+
         public function create()
         {
             $query = 'INSERT INTO ' . $this->table . ' SET User_id=:id,User_name=:name,User_password=:pass,is_Admin=:isAdmin';
@@ -65,7 +82,8 @@
 
         public function update()
         {
-            $query = 'UPDATE ' . $this->table . ' SET User_id=:id,User_name=:name,User_password=:pass,is_Admin=:isAdmin';
+            $query = 'UPDATE ' . $this->table . ' SET User_name=:name,User_password=:pass,is_Admin=:isAdmin
+            WHERE User_id=:id';
             $stmt = $this->conn->prepare($query);
             $this->name = htmlspecialchars(strip_tags($this->name));
             $stmt->bindParam(':id', $this->id);

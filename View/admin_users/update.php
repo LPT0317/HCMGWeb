@@ -276,19 +276,41 @@
  
  
 <!-- html form here where the product information will be entered -->
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+<?php
+    require_once 'includes/config.php';
+    require_once 'core/user.php';
+
+    $user = new User($db);
+    $user->id = $_GET['id'];
+    $user->isAdmin = 0;
+    $result = $user->getInfo();
+    $row = $result->fetch(PDO::FETCH_ASSOC);
+    extract($row);
+    $name = $User_name;
+    $password = $User_password;
+    if(!empty($_POST['name']) && !empty($_POST['password']))
+    {
+        $user->name = $_POST['name'];
+        $user->pass = $_POST['password'];
+        if($user->update())
+        {
+            echo "<div class='alert alert-success'>Record was changed.</div>";
+        }else{
+            die('Unable to change record.');
+        }
+    }else{
+        echo "<div class='alert alert-danger'>Please fill all the field!</div>";
+    }
+?>
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . '?id=' . $user->id;?>" method="post">
     <table>
         <tr>
             <td>Username</td>
-            <td><input type='text' name='name' class='form-control' /></td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td><input type='text' name='email' class='form-control' /></td>
+            <td><input type='text' name='name' class='form-control' value='<?php echo $name;?>'/></td>
         </tr>
         <tr>
             <td>Password</td>
-            <td><input type='text' name='password' class='form-control' /></td>
+            <td><input type='text' name='password' class='form-control' value='<?php echo $password;?>'/></td>
         </tr>
         <tr>
             <td></td>

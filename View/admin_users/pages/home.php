@@ -61,7 +61,7 @@
 			 <td>';
 				
 				 // we will use this links on next part of this post
-				 echo "<a href='#' class='btn btn-primary m-r-1em'>Edit</a>";
+				 echo '<a onclick=\'updateUser(' . $user_item['id'] .')\' class=\'btn btn-primary m-r-1em\'>Edit</a>';
 			
 				 // we will use this links on next part of this post
 				 echo '<a onclick=\'deleteUser(' . $user_item['id'] .')\' class=\'btn btn-danger\'>Delete</a>';
@@ -83,5 +83,9 @@
 		{
 			window.location = 'api/delete.php?id=' + id;
 		}
+	}
+	function updateUser(id)
+	{
+		window.location = 'update.php?id=' + id;
 	}
 </script>
