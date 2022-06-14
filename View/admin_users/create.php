@@ -276,15 +276,54 @@
  
  
 <!-- html form here where the product information will be entered -->
+<?php
+    require_once 'core/user.php';
+    require_once 'includes/config.php';
+    if(!empty($_REQUEST['name']))
+    {
+        if(!empty($_REQUEST['password']))
+        {
+            $user = new User($db);
+            $result = $user->readAll();
+            $num = $result->rowCount();
+            if($num > 0)
+            {
+                $id = 1;
+                while($row = $result->fetch(PDO::FETCH_ASSOC))
+                {
+                    extract($row);
+                    if($id != $User_id)
+                    {
+                        break;
+                    }
+                    $id++;
+                }
+            }else{
+                $id = 1;
+            }
+            
+            $user->id = $id;
+            $user->name = $_POST['name'];
+            $user->pass = $_POST['password'];
+            $user->isAdmin = 0;
+            if($user->create())
+            {
+                echo "<div class='alert alert-success'>Record was created.</div>";
+            }else{
+                die('Unable to create new record.');
+            }
+        }else{
+            echo "<div class='alert alert-danger'>Please fill all the field!</div>";
+        }
+    }else{
+        echo "<div class='alert alert-danger'>Please fill all the field!</div>";
+    }
+?>
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
     <table>
         <tr>
             <td>Username</td>
             <td><input type='text' name='name' class='form-control' /></td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td><input type='text' name='email' class='form-control' /></td>
         </tr>
         <tr>
             <td>Password</td>
@@ -293,7 +332,7 @@
         <tr>
             <td></td>
             <td>
-                <input type='submit' value='Add' class='btn btn-primary' />
+                <input type='submit' name='submit' value='Add' class='btn btn-primary' />
                 <a href='index.php' class='btn btn-danger'>Back</a>
             </td>
         </tr>

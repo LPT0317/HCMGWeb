@@ -26,7 +26,7 @@
 	echo "<div class='alert alert-success'>Record was deleted.</div>";
 	}
 	// link to create record form
-	echo "<a href='#' class='btn btn-primary m-b-1em'>New User</a>";
+	echo "<a href='create.php' class='btn btn-primary m-b-1em'>New User</a>";
 	echo "<br> <br>";
 
 	// include database connection
@@ -42,7 +42,6 @@
 		echo "<tr>
 		<th>User ID</th>
 		<th>Username</th>
-		<th>Email</th>
 		<th>Password</th>
 		<th>Action</th>
 		</tr>";
@@ -58,7 +57,6 @@
 			echo '<tr>
 			 <td>' . $user_item['id'] . '</td>
 			 <td>' . $user_item['name'] . '</td>
-			 <td>None</td>
 			 <td>' . $user_item['pass'] . '</td>
 			 <td>';
 				

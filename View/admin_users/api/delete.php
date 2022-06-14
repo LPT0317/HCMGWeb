@@ -1,5 +1,6 @@
 <?php
-    require_once '../core/initialize.php';
+    require_once '../core/user.php';
+    require_once '../includes/config.php';
 	$user = new User($db);
     $user->id = $_GET['id'];
     if($user->delete())
