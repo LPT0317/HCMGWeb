@@ -15,134 +15,88 @@
 		</div>
 	</div>
 	<section class="content">
-						<table class="table">
-						  <thead class="thead-primary">
-						    <tr>
-						    	<th>Game ID</th>
-						    	<th>Image</th>
-						    	<th>Name</th>
-						      <th>Price</th>
-						      <th>Produce Studio</th>
-						      <th>Type</th>
-						      <th>Action</th>
-						    </tr>
-						  </thead>
-						  <tbody>
-						    
-
-						  <tr class="alert" role="alert">
-						    	<td>
-						    		2011899
-						    	</td>
-						    	<td>
-						    		<div class="img" style="background-image: url(../../dummy/game10.jpg);"></div>
-						    	</td>
-						      <td>
-						      	<div class="email" style="text-align: left;">
-						      		<span>Elden Ring</span>
-						      		<span>THE NEW FANTASY ACTION RPG. Rise, Tarnished, and be guided by grace to brandish the power of the Elden Ring...</span>
-						      	</div>
-						      </td>
-						      <td>$35.50</td>
-						      <td>
-					        	ULTIMATE Mystery
-				          </td>
-				          <td>Action, Fantasy</td>
-						      <td>
-								
-							  <a href='details01.php' class='btn btn-danger' style='text-decoration: none;'>Details</a>
-							 
-				        	</td>
-						    </tr>
-
-							<tr class="alert" role="alert">
-						    	<td>
-						    		2011899
-						    	</td>
-						    	<td>
-						    		<div class="img" style="background-image: url(../../dummy/game10.jpg);"></div>
-						    	</td>
-						      <td>
-						      	<div class="email" style="text-align: left;">
-						      		<span>Elden Ring</span>
-						      		<span>THE NEW FANTASY ACTION RPG. Rise, Tarnished, and be guided by grace to brandish the power of the Elden Ring...</span>
-						      	</div>
-						      </td>
-						      <td>$35.50</td>
-						      <td>
-					        	ULTIMATE Mystery
-				          </td>
-				          <td>Action, Fantasy</td>
-						      <td>
-								
-							  <a href='details01.php' class='btn btn-danger' style='text-decoration: none;'>Details</a>
-							 
-				        	</td>
-						    </tr>
-
-							<tr class="alert" role="alert">
-						    	<td>
-						    		2011899
-						    	</td>
-						    	<td>
-						    		<div class="img" style="background-image: url(../../dummy/game10.jpg);"></div>
-						    	</td>
-						      <td>
-						      	<div class="email" style="text-align: left;">
-						      		<span>Elden Ring</span>
-						      		<span>THE NEW FANTASY ACTION RPG. Rise, Tarnished, and be guided by grace to brandish the power of the Elden Ring...</span>
-						      	</div>
-						      </td>
-						      <td>$35.50</td>
-						      <td>
-					        	ULTIMATE Mystery
-				          </td>
-				          <td>Action, Fantasy</td>
-						      <td>
-								
-							  <a href='details01.php' class='btn btn-danger' style='text-decoration: none;'>Details</a>
-							 
-				        	</td>
-						    </tr>
-
-							<tr class="alert" role="alert">
-						    	<td>
-						    		2011899
-						    	</td>
-						    	<td>
-						    		<div class="img" style="background-image: url(../../dummy/game10.jpg);"></div>
-						    	</td>
-						      <td>
-						      	<div class="email" style="text-align: left;">
-						      		<span>Elden Ring</span>
-						      		<span>THE NEW FANTASY ACTION RPG. Rise, Tarnished, and be guided by grace to brandish the power of the Elden Ring...</span>
-						      	</div>
-						      </td>
-						      <td>$35.50</td>
-						      <td>
-					        	ULTIMATE Mystery
-				          </td>
-				          <td>Action, Fantasy</td>
-						      <td>
-								
-							  <a href='details01.php' class='btn btn-danger' style='text-decoration: none;'>Details</a>
-							 
-				        	</td>
-						    </tr>
-
-
-						  </tbody>
-						</table>
-						<div class="center">
+	<?php
+			$page = isset($_GET['page']) ? $_GET['page'] : 1;
+			require_once 'api/read.php';
+			if($suc)
+			{
+				echo
+					'<table class="table">
+						<thead class="thead-primary">
+						<tr>
+							<th>Game ID</th>
+							<th>Image</th>
+							<th>Name</th>
+							<th>Price</th>
+							<th>Produce Studio</th>
+							<th>Type</th>
+							<th>Action</th>
+						</tr>
+						</thead>
+						<tbody>';
+				for($i = 0; $i < 4; $i++)
+				{
+					extract($productInfo[$i]);
+					$productData = array(
+						'id' => $Product_id,
+						'img' => $Background_image,
+						'name' => $Name,
+						'desc' => $Description,
+						'type' => $Type,
+						'studio' => $Produce_studio,
+						'price' => $Price
+					);
+					echo
+					'<tr class="alert" role="alert">
+						<td>'
+						. $productData['id'] .
+						'</td>
+						<td>
+							<div class="img" style="background-image: url(../../'
+							. $productData['img'] .
+							');"></div>
+						</td>
+						<td>
+						<div class="email" style="text-align: left;">
+							<span>'
+							. $productData['name'] .
+							'</span>
+							<span>'
+							. $productData['desc'] .
+							'</span>
+						</div>
+						</td>
+						<td>$'
+						. $productData['price'] .
+						'</td>
+						<td>'
+						. $productData['studio'] .
+						'</td>
+						<td>'
+						. $productData['type'] .
+						'</td>
+						<td>							
+							<a href=\'details01.php?id='
+							. $productData['id'] .
+							'\' class=\'btn btn-danger\' style=\'text-decoration: none;\'>Details</a>							
+						</td>
+					</tr>';
+				}
+				echo
+						'</tbody>
+					</table>';
+			}
+		?>
+		<div class="center">
   <div class="pagination">
-  <a href="#">&#8249</a>
+  <a href="#">&laquo;</a>
   <a href="#" class="active">1</a>
   <a href="#">2</a>
   <a href="#">3</a>
   <a href="#">4</a>
   <a href="#">5</a>
   <a href="#">6</a>
-  <a href="#">&#8250</a>
+  <a href="#">&raquo;</a>
   </div>
 </div>
 	</section>

@@ -276,11 +276,30 @@
 		</div>
 	</div>
 	<section class="content">
+        <?php
+            $id = $_GET['id'];
+            require_once 'core/product.php';
+            require_once 'includes/config.php';
+            $product = new Product($db);
+            $product->Product_id = $id;
+            $result = $product->getInfo();
+            $row = $result->fetch(PDO::FETCH_ASSOC);
+            extract($row);
+            $producInfo = array(
+                'id' => $Product_id,
+                'img' => $Background_image,
+                'name' => $Name,
+                'desc' => $Description,
+                'type' => $Type,
+                'studio' => $Produce_studio,
+                'price' => $Price
+            );
+        ?>
           <div class="section">
-          <h2 style="text-align: center;">Elden Ring</h2>
-              <img src="../../dummy/game10.jpg" alt="logo" width="100%" height="300px">
-              <h2 style="text-align: center;">Price: $7,77</h2>
-              <p>Description: THE NEW FANTASY ACTION RPG. Rise, Tarnished, and be guided by grace to brandish the power of the Elden Ring...</p>
+          <h2 style="text-align: center;"><?php echo $producInfo['name'];?></h2>
+          <img src="../../<?php echo $producInfo['img'];?>" alt="logo" width="100%" height="300px">
+              <h2 style="text-align: center;">Price: $<?php echo $producInfo['price'];?></h2>
+              <p>Description: <?php echo $producInfo['desc'];?></p>
               <div class="center">
               <?php
               echo "<a href='index.php' class='btn btn-danger'>Back</a>";
