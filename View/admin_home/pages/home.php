@@ -28,7 +28,7 @@
 						<div class="icon">
 							<i class="ion ion-ios-game-controller-b"></i>
 						</div>
-						<a href="../../View/Admin_gameOrders" class="small-box-footer">Details   <i class="fas fa-arrow-circle-right"></i></a>
+						<a href="../../View/Admin_gameOrders/index.php?page=1" class="small-box-footer">Details   <i class="fas fa-arrow-circle-right"></i></a>
 					</div>
 				</div>
 				<!-- ./col -->

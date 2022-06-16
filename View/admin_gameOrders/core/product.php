@@ -22,6 +22,19 @@ class Product{
     public function __construct($db){
         $this->conn = $db;
     }
+    
+    public function count(){
+        $query = 'SELECT COUNT(Product_id)
+            FROM '.$this->table;
+        
+        //prepare statement
+        $stmt = $this->conn->prepare($query);
+
+        //execute query
+        $stmt->execute();
+
+        return $stmt;
+    }
 
     //get all product in db
     public function read(){
@@ -43,6 +56,20 @@ class Product{
         $query = 'SELECT * 
             FROM '. $this->table .
             ' WHERE Product_id=' . $this->Product_id;
+        
+        //prepare statement
+        $stmt = $this->conn->prepare($query);
+
+        //execute query
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    public function readPage($start, $row){
+        $query = 'SELECT * 
+            FROM '. $this->table .
+            ' LIMIT ' . $start . ', ' . $row;
         
         //prepare statement
         $stmt = $this->conn->prepare($query);
