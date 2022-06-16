@@ -278,6 +278,7 @@
 	<section class="content">
         <?php
             $id = $_GET['id'];
+            $page = $_GET['page'];
             require_once 'core/product.php';
             require_once 'includes/config.php';
             $product = new Product($db);
@@ -302,7 +303,7 @@
               <p>Description: <?php echo $producInfo['desc'];?></p>
               <div class="center">
               <?php
-              echo "<a href='index.php' class='btn btn-danger'>Back</a>";
+              echo "<a href='index.php?page=". $page . "'class='btn btn-danger'>Back</a>";
               ?>
               </div>
             </div>
@@ -310,31 +311,53 @@
               <h2 style="text-align: center;">User Purchased</h2>
               <?php
 // include database connection
-
+require_once 'core/userLib.php';
+require_once 'core/user.php';
 // link to create record form
 //check if more than 0 record found
+$lib = new userLib($db);
+$user = new User($db);
+$lib->productID = $id;
+$res = $lib->getInfo();
+$num = $res->rowCount();
+if($num > 0)
+{
+    //start table
+    echo "<table>";
 
-//start table
-echo "<table>";
+    //creating our table heading
+    echo "<tr>
+    <th>User ID</th>
+    <th>Username</th>
+    <th>Product ID</th>
+    <th>Library ID</th>
+    </tr>";
+    while($row = $res->fetch(PDO::FETCH_ASSOC))
+    {
+        extract($row);
+        $user->id = $User_id;
+        $name = $user->getName();
+        $User_name = $name->fetch(PDO::FETCH_ASSOC);
+        extract($User_name);
+        $library = array(
+            'libID' => $Product_id,
+            'userID' => $User_id,
+            'productID' => $Product_id,
+            'userName' => $User_name
+        );
+        // creating new table row per record
+        echo "<tr>
+        <td>" . $library['userID'] . "</td>
+        <td>" . $library['userName'] . "</td>
+        <td>" . $library['productID'] . "</td>
+        <td>" . $library['libID'] . "</td>";
+        echo "</tr>";
+    }
+}
 
-//creating our table heading
-echo "<tr>
-<th>User ID</th>
-<th>Username</th>
-<th>Email</th>
-<th>Product ID</th>
-<th>Library ID</th>
-</tr>";
 
 
-// creating new table row per record
-echo "<tr>
- <td>2011899</td>
- <td>IVietNam01stI</td>
- <td>HCMUT@edu.vn</td>
- <td>2011899</td>
- <td>2011899</td>";
-echo "</tr>";
+
 echo "</table>";
 echo "<br>";
 ?>

@@ -18,7 +18,7 @@
 	<?php
 		require_once 'core/product.php';
 		require_once 'includes/config.php';
-		$page = $_GET['page'];
+		$page = empty($_GET['page']) ? 1 : $_GET['page'];
 		$row = 10;
 		$start = $row * ($page - 1);
 		$product = new Product($db);
@@ -86,6 +86,7 @@
 					<td>							
 						<a href=\'details01.php?id='
 						. $productData['id'] .
+						'&page=' . $page .
 						'\' class=\'btn btn-danger\' style=\'text-decoration: none;\'>Details</a>							
 					</td>
 				</tr>';
